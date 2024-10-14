@@ -944,11 +944,11 @@ static void rpmtsPrintStats(rpmts ts)
 
 rpmts rpmtsFree(rpmts ts)
 {
-    if (ts == NULL || (--(ts->nrefs)) > 0)
+    if (ts == NULL || --ts->nrefs > 0)
 	return NULL;
 
     /* Cleanup still needs to rpmtsLink() and rpmtsFree() */
-    ts  = rpmtsLink(ts);
+    ts = rpmtsLink(ts);
 
     /* Don't issue element change callbacks when freeing */
     rpmtsSetChangeCallback(ts, NULL, NULL);
